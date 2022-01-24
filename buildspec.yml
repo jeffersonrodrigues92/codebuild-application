@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    S3_ARTIFACT: "artifacts"
+    S3_ARTIFACT: "artifacts-aws-test"
     
 phases:
   install:
@@ -11,6 +11,7 @@ phases:
       - python3 -m pip install --target . -r requirements.txt
   build:
     commands:
+      - ls
       - zip -r artifact.zip .
       - aws cloudformation package --template-file ./cloudformation/cloudformation.yaml --s3-bucket $S3_ARTIFACT --output-template-file ./cloudformation.yaml
 artifacts:
