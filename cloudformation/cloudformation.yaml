@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: "AWS::Serverless-2016-10-31"
+
+Parameters:
+  FunctionName:
+    Type: String
+    Default: funciotnok
+
+Resources:
+
+  TransformExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: [lambda.amazonaws.com]
+            Action: ['sts:AssumeRole']
+      Path: /
+      Policies:
+        - PolicyName: account-validation-process
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action: ['logs:*']
+                Resource: 'arn:aws:logs:*:*:*'
+
+  TransformFunction:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Handler: handler.lambda_handler
+      Runtime: python3.8
+      FunctionName: !Ref FunctionName
+      CodeUri: ../artifact.zip
+      MemorySize: 128
+      Timeout: 300
+      Role: !GetAtt TransformExecutionRole.Arn
+
+  TransformFunctionPermissions:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !GetAtt TransformFunction.Arn
+      Principal: 'cloudformation.amazonaws.com'
