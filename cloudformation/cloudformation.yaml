@@ -34,7 +34,7 @@ Resources:
       Handler: handler.lambda_handler
       Runtime: python3.8
       FunctionName: !Ref FunctionName
-      CodeUri: ../artifact.zip
+      CodeUri: ./artifact.zip
       MemorySize: 128
       Timeout: 300
       Role: !GetAtt TransformExecutionRole.Arn
