@@ -12,8 +12,8 @@ phases:
   build:
     commands:
       - echo $S3_ARTIFACT
-      - ls
       - zip -r artifact.zip .
+      - ls
       - aws cloudformation package --template-file ./cloudformation/cloudformation.yaml --s3-bucket $S3_ARTIFACT --output-template-file ./cloudformation.yaml
 artifacts:
   files:
