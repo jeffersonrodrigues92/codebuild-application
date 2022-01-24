@@ -11,6 +11,7 @@ phases:
       - python3 -m pip install --target . -r requirements.txt
   build:
     commands:
+      - echo $S3_ARTIFACT
       - ls
       - zip -r artifact.zip .
       - aws cloudformation package --template-file ./cloudformation/cloudformation.yaml --s3-bucket $S3_ARTIFACT --output-template-file ./cloudformation.yaml
