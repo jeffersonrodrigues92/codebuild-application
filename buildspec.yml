@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    S3_ARTIFACT: "taurasec-artifacts"
+    S3_ARTIFACT: "artifacts"
     
 phases:
   install:
